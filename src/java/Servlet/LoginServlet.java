@@ -28,12 +28,14 @@ public class LoginServlet extends HttpServlet {
         if(request.getParameter("logout")!=null){
             session.invalidate();
             session = request.getSession();
-             boolean justLogout=true;
+            boolean justLogout=true;
             session.setAttribute("justLogout", justLogout);
             response.sendRedirect("login");
+            
             return;
         }
         if((User)session.getAttribute("user")==null){
+            
             getServletContext().getRequestDispatcher("/WEB-INF/Login.jsp").forward(request, response);
         }
         else{
@@ -64,6 +66,7 @@ public class LoginServlet extends HttpServlet {
                response.sendRedirect("home");
           }
           else{
+              session.setAttribute("justLogout", false);
                boolean error = true;
                request.setAttribute("error", error);
                getServletContext().getRequestDispatcher("/WEB-INF/Login.jsp").forward(request, response);
